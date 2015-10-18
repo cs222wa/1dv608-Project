@@ -1,2 +1,7 @@
 <?php
-//controller
+namespace controller;
+class Controller
+{
+
+
+}
