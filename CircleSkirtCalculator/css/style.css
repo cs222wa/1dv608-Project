@@ -1,0 +1,22 @@
+body{
+    margin-left: 30px;
+}
+
+
+
+#header{
+    background-image: url("circleskirtcalculator-logo.png");
+    background-repeat: no-repeat;
+    background-size: 50%;
+    width: 900px;
+    height: 200px;
+    margin-left: -20px;
+}
+
+.hidden{
+    visibility:hidden;
+}
+
+h3{
+    margin-top: 50px;
+}

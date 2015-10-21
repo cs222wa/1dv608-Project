@@ -27,6 +27,8 @@ $controller = new \controller\Controller($calcView, $skirtView, $skirtModel);
 
 //PICK WHICH VIEW TO DISPLAY
 $layoutView->setLayout($calcView);
+
+
 /*
 //CALL CONTROLLER METHOD doCalculate IN ORDER TO DETERMINE IF USER WANTS TO CALCULATE A SKIRT PATTERN
 $calculate = $controller->doCalculate();

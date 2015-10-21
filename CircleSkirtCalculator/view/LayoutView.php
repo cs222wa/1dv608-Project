@@ -12,10 +12,12 @@ class LayoutView {
       <html>
         <head>
           <meta charset="utf-8">
+          <link rel="stylesheet" type="text/css" href="css\\style.css">
           <title>Circle Skirt Calculator</title>
         </head>
         <body>
-          <h2>Enter your waist measurement in the form below and pick a skirt model</h2>
+        <header id="header"><h1 class="hidden">Circle Skirt Calculator</h1></header>
+          <h3>Enter your waist measurement in the form below and pick a skirt model</h3>
           <div class="container">
               ' . $calcView->response() . '
           </div>
@@ -26,8 +28,8 @@ class LayoutView {
 
 
     private function checkURL(){
-        //if url contains "register" - return true, if not return false
-        if(strpos("$_SERVER[REQUEST_URI]", "?register")){
+        //if url contains "calculation" - return true, if not return false
+        if(strpos("$_SERVER[REQUEST_URI]", "?calculation")){
             return true;
         }
         else return false;
