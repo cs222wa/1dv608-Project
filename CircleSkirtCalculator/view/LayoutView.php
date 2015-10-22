@@ -8,6 +8,8 @@ class LayoutView {
         $this->render($calcView);
     }
     public function render( \view\CalculatorView $calcView) {
+
+        //boolean - finns skirt eller inte?
         echo '<!DOCTYPE html>
       <html>
         <head>
@@ -17,7 +19,7 @@ class LayoutView {
         </head>
         <body>
         <header id="header"><h1 class="hidden">Circle Skirt Calculator</h1></header>
-          <h3>Enter your waist measurement in the form below and pick a skirt model</h3>
+          <h3>Enter your waist measurement and desired skirt length in the form below and pick a skirt model</h3>
           <div class="container">
               ' . $calcView->response() . '
           </div>

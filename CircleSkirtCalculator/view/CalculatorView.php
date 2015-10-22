@@ -34,6 +34,10 @@ class CalculatorView
 					<label for="' . self::$length . '">Skirt length:</label>
 					<input type="text" size="20" id="' . self::$length . '" name="' . self::$length . '" value="' . $this->getLength() . '" />
 					<input type="submit" name="' . self::$calculate . '" value="Calculate"/>
+					<div id="radio">
+					<input type="radio" name="full" value="full" checked><label for="full">Full Circle</label>
+					 <input type="radio" name="half" value="half"><label for="half">Half Circle</label>
+					</div>
 				</fieldset>
 			</form>
 		';
