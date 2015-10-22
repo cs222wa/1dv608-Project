@@ -42,9 +42,9 @@ class CalculatorView
 					</div>
 					<div id="fabriclabels">
 					<label for="' . self::$fabricLength . '" class="aligned">Fabric Length:</label>
-					<input type="text" size="20" id="' . self::$fabricLength . '" name="' . self::$fabricLength . '" value="' . $this->getFabricLength() . '" />
+					<input type="text" size="20" id="' . self::$fabricLength . '" name="' . self::$fabricLength . '" value="' . $this->getFabricLength() . '" required=false />
 					<label for="' . self::$fabricWidth . '" class="aligned">Fabric Width:</label>
-					<input type="text" size="20" id="' . self::$fabricWidth . '" name="' . self::$fabricWidth . '" value="' . $this->getFabricWidth() . '" />
+					<input type="text" size="20" id="' . self::$fabricWidth . '" name="' . self::$fabricWidth . '" value="' . $this->getFabricWidth() . '"  required=false />
 					</div>
 					<div id="radio">
 					<input type="radio" name="full" value="full" checked><label for="full">Full Circle</label>
@@ -224,7 +224,18 @@ class CalculatorView
         return false;
     }
 
+    //returns the selected skirt type to controller. true = full circle, false = half circle
+    //if method returns null - no style have been selected and an error message will be shown
+    public function getSkirtStyleChoice(){
+        $fullStyle = $_REQUEST['full'];
+        $halfStyle = $_REQUEST['half'];
 
-    //TODO: add getRadioButtonChoice method that returns the selected skirt type to controller.
-    //TODO: how to make fabric form not required without failing validation?
+        if ($fullStyle == "full") {
+            return true;
+        }
+        if ($halfStyle == "half") {
+            return false;
+        }
+        return null;
+    }
 }
