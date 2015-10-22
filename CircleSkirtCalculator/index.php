@@ -26,7 +26,7 @@ $skirtView = new \view\SkirtView();
 $controller = new \controller\Controller($calcView, $skirtView, $skirtModel);
 
 //PICK WHICH VIEW TO DISPLAY
-$layoutView->setLayout($calcView);
+$layoutView->setLayout($controller, $calcView, $skirtView);
 
 
 /*

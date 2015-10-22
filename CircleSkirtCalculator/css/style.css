@@ -21,7 +21,42 @@ h3{
     margin-top: 50px;
 }
 
+.notice{
+    font-weight: bold;
+    font-style: italic;
+}
+
 #radio{
     display: block;
     margin-top: 15px;
+    text-align: right;
+    margin-right: 40px;
+}
+
+legend{
+    font-weight: bold;
+    font-size: 20px;
+}
+
+form{
+    width: 400px;
+    float: left;
+    margin-top: 30px;
+}
+
+label, input{
+    display: inline-block;
+}
+
+.aligned{
+    width: 150px;
+    font-weight: bold;
+    margin-bottom: 2px;
+    margin-top: 10px;
+    text-align: right;
+}
+
+#submitbutton{
+    margin-top: 20px;
+    float: right;
 }

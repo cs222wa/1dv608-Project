@@ -3,7 +3,6 @@
 namespace model;
 class Skirt
 {
-
     //Calculates and returns the radius of a full circle skirt
     public function CalculateRadiusFullSkirt($c){
         $r=$c/(2*pi())-1;

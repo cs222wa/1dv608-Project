@@ -7,12 +7,17 @@ class CalculatorView
     private static $length = 'CalculatorView::Length';
     private static $messageId = 'CalculatorView::Message';
     private static $calculate = 'CalculatorView::Calculate';
+    private static $fabricLength = 'CalculatorView::FabricLength';
+    private static $fabricWidth = 'CalculatorView::FabricWidth';
     private $message = "";
     public $measurementNotValid = false;
     public $measurementTooShort= false;
     public $lengthNotValid = false;
     public $lengthTooShort= false;
-
+    public $fabricLengthTooShort = false;
+    public $fabricLengthNotValid = false;
+    public $fabricWidthTooShort = false;
+    public $fabricWidthNotValid = false;
 
     public function response() {
         $message = $this->message;
@@ -25,19 +30,27 @@ class CalculatorView
     private function renderCalculationForm($message)
     {
         return '
-			<form action="?calculate" method="post" enctype="multipart/form-data">
+			<form action="?calculate" method="get" enctype="multipart/form-data">
 				<fieldset>
 					<legend>Circle Skirt Pattern Calculator</legend>
 					<p id="' . self::$messageId . '">' . $message . '</p>
-					<label for="' . self::$measurement . '">Waist circumference:</label>
+					<div id="skirtlabels">
+					<label for="' . self::$measurement . '" class="aligned">Waist circumference:</label>
 					<input type="text" size="20" id="' . self::$measurement . '" name="' . self::$measurement . '" value="' . $this->getMeasurement() . '" />
-					<label for="' . self::$length . '">Skirt length:</label>
+					<label for="' . self::$length . '" class="aligned">Skirt length:</label>
 					<input type="text" size="20" id="' . self::$length . '" name="' . self::$length . '" value="' . $this->getLength() . '" />
-					<input type="submit" name="' . self::$calculate . '" value="Calculate"/>
+					</div>
+					<div id="fabriclabels">
+					<label for="' . self::$fabricLength . '" class="aligned">Fabric Length:</label>
+					<input type="text" size="20" id="' . self::$fabricLength . '" name="' . self::$fabricLength . '" value="' . $this->getFabricLength() . '" />
+					<label for="' . self::$fabricWidth . '" class="aligned">Fabric Width:</label>
+					<input type="text" size="20" id="' . self::$fabricWidth . '" name="' . self::$fabricWidth . '" value="' . $this->getFabricWidth() . '" />
+					</div>
 					<div id="radio">
 					<input type="radio" name="full" value="full" checked><label for="full">Full Circle</label>
 					 <input type="radio" name="half" value="half"><label for="half">Half Circle</label>
 					</div>
+					<input type="submit" name="' . self::$calculate . '" value="Calculate" id="submitbutton"/>
 				</fieldset>
 			</form>
 		';
@@ -47,16 +60,28 @@ class CalculatorView
     public function setMessage() {
 
         if($this->$measurementNotValid){
-            $this->message .= 'Measurement must be a number.';
+            $this->message .= 'Measurement is not valid. It must be a number.';
         }
         if($this->measurementTooShort){
             $this->message .= 'Measurement must be a number higher than 0.';
         }
         if($this->$lengthNotValid){
-            $this->message .= 'Skirt length must be a number.';
+            $this->message .= 'Skirt length is not valid. It must be a number.';
         }
         if($this->lengthTooShort){
             $this->message .= 'Skirt length must be a number higher than 0.';
+        }
+        if($this->fabricLengthNotValid){
+            $this->message .= 'The length of the fabric is not valid. It must be a number.';
+        }
+        if($this->fabricLengthTooShort){
+            $this->message .= 'Fabric length must be a number higher than 0.';
+        }
+        if($this->fabricWidthNotValid){
+            $this->message .= 'The width of the fabric is not valid. It must be a number.';
+        }
+        if($this->fabricWidthTooShort){
+            $this->message .= 'Fabric width must be a number higher than 0.';
         }
         if("" == $this->message){
             return true;
@@ -67,10 +92,10 @@ class CalculatorView
 
     private function getMeasurement()
     {
-        //control if the user have entered anything in the measurement field
-        if (isset($_POST[self::$measurement])) {
+        //control if the user have entered anything in the waist measurement field
+        if (isset($_REQUEST[self::$measurement])) {
             //return value stripped of tags
-            return strip_tags($_POST[self::$measurement]);
+            return strip_tags($_REQUEST[self::$measurement]);
         }
         //if measurement field in the form is empty on submition - display empty form.
         return "";
@@ -78,18 +103,41 @@ class CalculatorView
 
     private function getLength()
     {
-        //control if the user have entered anything in the measurement field
-        if (isset($_POST[self::$length])) {
+        //control if the user have entered anything in the skirt length field
+        if (isset($_REQUEST[self::$length])) {
             //return value stripped of tags
-            return strip_tags($_POST[self::$length]);
+            return strip_tags($_REQUEST[self::$length]);
         }
-        //if measurement field in the form is empty on submition - display empty form.
+        //if skirt length field in the form is empty on submition - display empty form.
         return "";
     }
 
+    private function getFabricLength()
+    {
+        //control if the user have entered anything in the fabric length field
+        if (isset($_REQUEST[self::$fabricLength])) {
+            //return value stripped of tags
+            return strip_tags($_REQUEST[self::$fabricLength]);
+        }
+        //if fabric length field in the form is empty on submition - display empty form.
+        return "";
+    }
+
+    private function getFabricWidth()
+    {
+        //control if the user have entered anything in the fabric width field
+        if (isset($_REQUEST[self::$fabricWidth])) {
+            //return value stripped of tags
+            return strip_tags($_REQUEST[self::$fabricWidth]);
+        }
+        //if fabric width field in the form is empty on submition - display empty form.
+        return "";
+    }
+
+
     //checks if user has clicked calculate button
     public function userWantsToCalculate(){
-        if (isset($_POST[self::$calculate])){
+        if (isset($_REQUEST[self::$calculate])){
             return true;
         }
         //If calculate button is not clicked return false.
@@ -97,14 +145,14 @@ class CalculatorView
     }
 
     public function getInputMeasurement(){
-        //if a username has been posted
-        if(isset($_POST[self::$measurement])){
-            $measurement = $_POST[self::$measurement];
+        //if a waist measurement has been posted
+        if(isset($_REQUEST[self::$measurement])){
+            $measurement = $_REQUEST[self::$measurement];
             //check for invalid characters - return true if not found, false if found
             if(!preg_match('/[^A-Za-z0-9.#\\-$]/', $measurement)){
                 //check that the measurement is a number larger than 0
                 if(is_numeric($measurement) && $measurement > 0){
-                    //return username to controller
+                    //return measurement to controller
                     return $measurement;
                 }
                 $this->$measurementTooShort = true;
@@ -116,15 +164,15 @@ class CalculatorView
         return false;
     }
 
-    public function getInputLength(){
-        //if a username has been posted
-        if(isset($_POST[self::$length])){
-            $length = $_POST[self::$length];
+    public function getInputSkirtLength(){
+        //if a skirt length has been posted
+        if(isset($_REQUEST[self::$length])){
+            $length = $_REQUEST[self::$length];
             //check for invalid characters - return true if not found, false if found
             if(!preg_match('/[^A-Za-z0-9.#\\-$]/', $length)){
-                //check that the measurement is a number larger than 0
+                //check that the skirt length is a number larger than 0
                 if(is_numeric($length) && $length > 0){
-                    //return username to controller
+                    //return skirt length to controller
                     return $length;
                 }
                 $this->$lengthTooShort = true;
@@ -135,4 +183,48 @@ class CalculatorView
         $this->$lengthTooShort = true;
         return false;
     }
+
+    public function getInputFabricLength(){
+        //if a fabric length has been posted
+        if(isset($_REQUEST[self::$fabricLength])){
+            $length = $_REQUEST[self::$fabricLength];
+            //check for invalid characters - return true if not found, false if found
+            if(!preg_match('/[^A-Za-z0-9.#\\-$]/', $length)){
+                //check that the fabric length is a number
+                if(is_numeric($length)){
+                    //return fabric length to controller
+                    return $length;
+                }
+                $this->$fabricLengthTooShort = true;
+                return false;
+            }
+            $this->$fabricLengthNotValid = true;
+        }
+        $this->$fabricLengthTooShort = true;
+        return false;
+    }
+
+    public function getInputFabricWidth(){
+        //if a fabric width has been posted
+        if(isset($_REQUEST[self::$fabricWidth])){
+            $width = $_REQUEST[self::$fabricWidth];
+            //check for invalid characters - return true if not found, false if found
+            if(!preg_match('/[^A-Za-z0-9.#\\-$]/', $width)){
+                //check that the fabric width is a number
+                if(is_numeric($width)){
+                    //return fabric width to controller
+                    return $width;
+                }
+                $this->$fabricWidthTooShort = true;
+                return false;
+            }
+            $this->$fabricWidthNotValid = true;
+        }
+        $this->$fabricWidthTooShort = true;
+        return false;
+    }
+
+
+    //TODO: add getRadioButtonChoice method that returns the selected skirt type to controller.
+    //TODO: how to make fabric form not required without failing validation?
 }

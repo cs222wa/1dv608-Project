@@ -4,12 +4,11 @@ use model\Skirt;
 
 class LayoutView {
 
-    public function setLayout($calcView){
-        $this->render($calcView);
+    public function setLayout($controller, $calcView, $skirtview){
+        $this->render($controller, $calcView, $skirtview);
     }
-    public function render( \view\CalculatorView $calcView) {
+    public function render( \controller\Controller $controller, \view\CalculatorView $calcView, \view\SkirtView $skirtView) {
 
-        //boolean - finns skirt eller inte?
         echo '<!DOCTYPE html>
       <html>
         <head>
@@ -20,8 +19,17 @@ class LayoutView {
         <body>
         <header id="header"><h1 class="hidden">Circle Skirt Calculator</h1></header>
           <h3>Enter your waist measurement and desired skirt length in the form below and pick a skirt model</h3>
+          <p class="notice">Add fabric measurements to calculate if there is enough fabric to make the skirt.</p>
           <div class="container">
-              ' . $calcView->response() . '
+            <div id="calculationform">
+                ' . $calcView->response() . '
+            </div>
+            <div id="patterndisplay">
+                <!-- if(' /* controller is not null */ . '){
+              '  /* render $skirtview->response() */ . '
+              }
+              -->
+            </div>
           </div>
          </body>
       </html>
