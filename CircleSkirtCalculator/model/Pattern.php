@@ -3,7 +3,6 @@
 namespace model;
 class Pattern
 {
-
     //Calculates if fabric dimensions are enough to make a full skirt
     public function SetFullSkirtFabricDimension($r, $l, $fl, $fw){
 
@@ -14,7 +13,6 @@ class Pattern
         $skirtLength = $r+$l;
 
         CalculateSkirtFabricFit($skirtLength, $fabricLength, $fabricWidth);
-
     }
 
     //Calculates if fabric dimensions are enough to make a half skirt
@@ -27,18 +25,25 @@ class Pattern
         $skirtLength = $r+$l;
 
         CalculateSkirtFabricFit($skirtLength, $fabricLength, $fabricWidth);
-
     }
 
     public function CalculateSkirtFabricFit($skirtLength, $fabricLength, $fabricWidth){
 
         if($fabricLength - $skirtLength <0){
-            //fabric is too small
-            //return margin of $fabricLength - $skirtLengt
+            //fabric is too small - save as public variable $fabricLengthTooSmall
+            //store margin of $fabricLength - $skirtLengt as public $fabricLengthMargin
         }
+        else{
+            //store margin of $fabricLength - $skirtLengt as public $fabricLengthMargin
+        }
+
+
         if($fabricWidth - $skirtLength <0){
-            //fabric is too small
-            //return margin of $fabricWidth - $skirtLengt
+            //fabric is too small - save as public variable $fabricWidthTooSmall
+            //store margin of $fabricWidth - $skirtLengt as public $fabricWidthMargin
+        }
+        else{
+            //store margin of $fabricLength - $skirtLengt as public $fabricLengthMargin
         }
     }
 }

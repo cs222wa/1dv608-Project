@@ -90,6 +90,7 @@ class CalculatorView
 
     }
 
+    //function used to display latest value of the measurement field
     private function getMeasurement()
     {
         //control if the user have entered anything in the waist measurement field
@@ -101,6 +102,7 @@ class CalculatorView
         return "";
     }
 
+    //function used to display latest value of the skirt length field
     private function getLength()
     {
         //control if the user have entered anything in the skirt length field
@@ -112,6 +114,7 @@ class CalculatorView
         return "";
     }
 
+    //function used to display latest value of the fabric length field
     private function getFabricLength()
     {
         //control if the user have entered anything in the fabric length field
@@ -123,6 +126,7 @@ class CalculatorView
         return "";
     }
 
+    //function used to display latest value of the fabric width field
     private function getFabricWidth()
     {
         //control if the user have entered anything in the fabric width field
@@ -143,6 +147,7 @@ class CalculatorView
         //If calculate button is not clicked return false.
         return false;
     }
+
 
     public function getInputMeasurement(){
         //if a waist measurement has been posted
