@@ -26,7 +26,6 @@ class SkirtDAL
         if($exists == false){
             $_SESSION[self::$skirtSession][] = $skirt;
         }
-        //TODO:: if $exists = ta bort existsing och lägg till nya främst i array.
     }
 
     public function getSelectedSkirt(){

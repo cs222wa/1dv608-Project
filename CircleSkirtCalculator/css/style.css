@@ -2,15 +2,13 @@ body{
     margin-left: 30px;
 }
 
-
-
 #header{
     background-image: url("circleskirtcalculator-logo.png");
     background-repeat: no-repeat;
-    background-size: 50%;
+    background-size: 43%;
     width: 900px;
     height: 200px;
-    margin-left: -20px;
+    margin-left: 10px;
 }
 
 .hidden{
@@ -18,14 +16,19 @@ body{
 }
 
 h3{
-    margin-top: 50px;
+    margin-top: 15px;
+    margin-bottom: 25px;
+    margin-left: 20px;
+}
+
+.container{
+    margin-left: 30px;
 }
 
 .notice{
     font-weight: bold;
     font-style: italic;
 }
-
 
 #calculationform{
     width: 500px;
@@ -46,10 +49,6 @@ h3{
 legend{
     font-weight: bold;
     font-size: 20px;
-}
-
-form{
-    margin-top: 30px;
 }
 
 label, input{
@@ -75,7 +74,7 @@ input{
     padding: 5px 15px;
     box-sizing: border-box;
     background-color: orange;
-    color: #fff;
+    color: black;
     border: 2px solid orange;
     font-weight: 700;
     -webkit-transition: color 0.2s, background-color 0.2s;
@@ -89,24 +88,34 @@ input{
 
 #patterndisplay{
     background-color: orange;
-    width: 1000px;
-    height: 570px;
-    margin-top: 35px;
-    margin-left: 100px;
+    width: 1100px;
+    height: 620px;
+    margin-top: 10px;
+    margin-left: 150px;
     float: left;
+    border: 2px groove gray;
 }
 
+
 .patternheader{
+    margin-top: 30px;
     margin-left: 50px;
     margin-bottom: -20px;
 }
 
 #instructions{
+    margin-top: 10px;
     float: left;
 }
 
 #instructions h3{
     display: block;
+    margin-top: 40px;
+    margin-bottom: 10px;
+}
+
+#instructions p{
+    margin-left: 20px;
 }
 
 .patterntext{
@@ -122,7 +131,7 @@ input{
 }
 
 #sidebar{
-    margin-top: 40px;
+    margin-top: 30px;
 }
 
 table{
@@ -133,14 +142,14 @@ table{
 table th{
     text-align: left;
     padding: 10px;
-    background: #c0c0c0;
+    background: #4a4a4a;
     color: #fff;
 }
 
 table tr td{
     text-align: left;
     padding: 10px;
-    background: #f7f7f7;
+    background: #f1f1f1;
 }
 
 table tr:nth-child(2n) td{

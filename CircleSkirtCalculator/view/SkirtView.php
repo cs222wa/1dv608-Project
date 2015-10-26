@@ -57,7 +57,7 @@ class SkirtView
     private function renderHalfCircleInstructionsHTML()
     {
         //render folding instructions for Half Circle skirt
-        return '<h3>Folding Instructions</h3><p class="patterntext">Fold fabric once along the width.</p>';
+        return '<h3>Folding Instructions</h3><p class="patterntext">Fold fabric once along the length.</p>';
     }
 
     private function renderPatternHTML()
