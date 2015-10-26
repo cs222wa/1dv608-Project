@@ -1,5 +1,6 @@
 <?php
 namespace view;
+
 class CalculatorView
 {
 
@@ -9,8 +10,7 @@ class CalculatorView
     private static $calculate = 'CalculatorView::Calculate';
     private static $fabricLength = 'CalculatorView::FabricLength';
     private static $fabricWidth = 'CalculatorView::FabricWidth';
-    private $fullSkirtStatus = "checked";
-    private $halfSkirtStatus = "unchecked";
+    private static $skirtType = 'CalculatorView::SkirtType';
     private $message = "";
     public $measurementNotValid = false;
     public $measurementTooShort= false;
@@ -51,39 +51,52 @@ class CalculatorView
 					<input type="text" size="20" id="' . self::$fabricWidth . '" name="' . self::$fabricWidth . '" value="' . $this->getFabricWidth() . '"  required=false />
 					</div>-->
 					<div id="radio">
-					<input type="radio" name="skirtType" value="1" '. $this->fullSkirtStatus .' ><label for="full">Full Circle</label>
-					<input type="radio" name="skirtType" value="2" '. $this->halfSkirtStatus .' ><label for="half">Half Circle</label>
+
+
+					<input type="radio" name="' . self::$skirtType . '" value="'. \model\Skirt::$fullSkirt .'" '. $this->getSelectedTextForSkirtType(\model\Skirt::$fullSkirt) .' ><label for="full">Full Circle</label>
+					<input type="radio" name="' . self::$skirtType . '" value="'. \model\Skirt::$halfSkirt .'" '. $this->getSelectedTextForSkirtType(\model\Skirt::$halfSkirt) .' ><label for="half">Half Circle</label>
 					</div>
 					<input type="submit" name="' . self::$calculate . '" value="Calculate" id="submitbutton"/>
 				</fieldset>
 			</form>
 		';
     }
+
+    public function getSkirt(){
+       return new \model\Skirt($this->getSkirtType(), $this->getMeasurement(), $this->getLength());
+    }
+
+
     //returns the selected skirt type to controller. true = full circle, false = half circle
     //if method returns null - no style have been selected and an error message will be shown
     public function getSkirtStyleChoice(){
-        $skirtType = $_REQUEST['skirtType'];
-        if($skirtType == 1){
-            return true;
-        }
-        if($skirtType == 2 ){
-            return false;
+        if(isset($_REQUEST[self::$skirtType])){
+            $skirtType = $_REQUEST[self::$skirtType];
+            if($skirtType == \model\Skirt::$fullSkirt){
+                return true;
+            }
+            if($skirtType == \model\Skirt::$halfSkirt ){
+                return false;
+            }
         }
         return null;
     }
 
+    private function getSkirtType(){
+         //control if the user have entered anything in the waist measurement field
+        if (isset($_REQUEST[self::$skirtType])) {
+            //return value stripped of tags
+            return $_REQUEST[self::$skirtType];
+        }
+        //if measurement field in the form is empty on submition - display empty form.
+        return \model\Skirt::$fullSkirt;
+    }
 
-    //TODO: make application remmeber skirt type from previous calculation.
-    private function rememberSkirtType(){
-        //control which radio button was selected on Post
-        if ($_REQUEST['skirtType'] == 1) {
-            $this->fullSkirtStatus = 'checked';
+    private function getSelectedTextForSkirtType($value){
+        if($value == $this->getSkirtType()){
+            return 'checked="checked"';
         }
-        else if ($_REQUEST['skirtType'] == 2) {
-            $this->halfSkirtStatus = 'checked';
-        }
-        //return the skirt type which was selected
-        return ($_REQUEST['skirtType']);
+        return '';
     }
 
     //sets message

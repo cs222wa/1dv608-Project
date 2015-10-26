@@ -1,14 +1,12 @@
 <?php
 namespace view;
-
-
 class LayoutView {
 
     public function setLayout($controller, $calcView, $skirtview){
         $this->render($controller, $calcView, $skirtview);
     }
-    public function render($calculate, $calcView, $skirtView) {
 
+    public function render($calculate, $calcView, $skirtView) {
         echo '<!DOCTYPE html>
       <html>
         <head>
@@ -36,14 +34,5 @@ class LayoutView {
             return $skirtView->render();
         }
         return false;
-    }
-
-
-    private function checkURL(){
-        //if url contains "calculation" - return true, if not return false
-        if(strpos("$_SERVER[REQUEST_URI]", "?calculation")){
-            return true;
-        }
-        else return false;
     }
 }
