@@ -26,11 +26,21 @@ h3{
     font-style: italic;
 }
 
+
+#calculationform{
+    width: 500px;
+    float: left;
+}
+
+#skirtlabels{
+    margin-left: 50px;
+}
+
 #radio{
     display: block;
     margin-top: 15px;
-    text-align: right;
-    margin-right: 40px;
+    text-align: left;
+    margin-left: 200px;
 }
 
 legend{
@@ -39,13 +49,15 @@ legend{
 }
 
 form{
-    width: 400px;
-    float: left;
     margin-top: 30px;
 }
 
 label, input{
     display: inline-block;
+}
+
+input{
+    padding-right: 20px;
 }
 
 .aligned{
@@ -58,16 +70,30 @@ label, input{
 
 #submitbutton{
     margin-top: 20px;
-    float: right;
+    width: 100%;
+    display: block;
+    padding: 5px 15px;
+    box-sizing: border-box;
+    background-color: orange;
+    color: #fff;
+    border: 2px solid orange;
+    font-weight: 700;
+    -webkit-transition: color 0.2s, background-color 0.2s;
+    transition: color 0.2s, background-color 0.2s;
+}
+
+#submitbutton:hover{
+    background-color: #fff;
+    color: orange;
 }
 
 #patterndisplay{
     background-color: orange;
-    width: 70%;
+    width: 1000px;
     height: 570px;
     margin-top: 35px;
-    margin-right: 60px;
-    float: right;
+    margin-left: 100px;
+    float: left;
 }
 
 .patternheader{
@@ -93,4 +119,30 @@ label, input{
     height: auto;
     float:left;
     border: 2px groove black;
+}
+
+#sidebar{
+    margin-top: 40px;
+}
+
+table{
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table th{
+    text-align: left;
+    padding: 10px;
+    background: #c0c0c0;
+    color: #fff;
+}
+
+table tr td{
+    text-align: left;
+    padding: 10px;
+    background: #f7f7f7;
+}
+
+table tr:nth-child(2n) td{
+    background: #fff;
 }

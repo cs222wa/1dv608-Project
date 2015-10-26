@@ -20,13 +20,13 @@ class SkirtDAL
                 $exists = true;
             }
         }
+        if(count($this->getSkirts())>= 10){
+            array_shift($_SESSION[self::$skirtSession]);
+        }
         if($exists == false){
             $_SESSION[self::$skirtSession][] = $skirt;
         }
-
-        //i viewn hämtas dessa ut som lista om de finns, om ej, skriv ej ut något
-        //kontrollera om sparade mått redan finns - inga dubletter.
-        //i listan i view - skriv ut som länkar, om länk klickas, beräkna automatiskt.
+        //TODO:: if $exists = ta bort existsing och lägg till nya främst i array.
     }
 
     public function getSelectedSkirt(){

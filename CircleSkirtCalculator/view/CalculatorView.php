@@ -12,6 +12,7 @@ class CalculatorView
     private static $fabricWidth = 'CalculatorView::FabricWidth';
     private static $skirtType = 'CalculatorView::SkirtType';
     private $message = "";
+    private $skirtDAL;
     public $measurementNotValid = false;
     public $measurementTooShort= false;
     public $lengthNotValid = false;
@@ -21,6 +22,11 @@ class CalculatorView
     public $fabricWidthTooShort = false;
     public $fabricWidthNotValid = false;
     public $noSkirtSelected = false;
+
+
+    public function __construct(\model\SkirtDAL $skirtDAL){
+        $this->skirtDAL = $skirtDAL;
+    }
 
     public function response() {
         $message = $this->message;
@@ -38,10 +44,14 @@ class CalculatorView
 					<legend>Circle Skirt Pattern Calculator</legend>
 					<p id="' . self::$messageId . '">' . $message . '</p>
 					<div id="skirtlabels">
-					<label for="' . self::$measurement . '" class="aligned">Waist circumference:</label>
-					<input type="text" size="20" id="' . self::$measurement . '" name="' . self::$measurement . '" value="' . $this->getMeasurement() . '" />
-					<label for="' . self::$length . '" class="aligned">Skirt length:</label>
-					<input type="text" size="20" id="' . self::$length . '" name="' . self::$length . '" value="' . $this->getLength() . '" />
+                        <div class="formgroup">
+                            <label for="' . self::$measurement . '" class="aligned">Waist circumference:</label>
+                            <input type="text" size="20" id="' . self::$measurement . '" name="' . self::$measurement . '" value="' . $this->getMeasurement() . '" />
+                        </div>
+                        <div class="formgroup">
+                            <label for="' . self::$length . '" class="aligned">Skirt length:</label>
+                            <input type="text" size="20" id="' . self::$length . '" name="' . self::$length . '" value="' . $this->getLength() . '" />
+                        </div>
 					</div>
 					<!---
 					<div id="fabriclabels">
@@ -50,20 +60,60 @@ class CalculatorView
 					<label for="' . self::$fabricWidth . '" class="aligned">Fabric Width:</label>
 					<input type="text" size="20" id="' . self::$fabricWidth . '" name="' . self::$fabricWidth . '" value="' . $this->getFabricWidth() . '"  required=false />
 					</div>-->
-					<div id="radio">
-
-
-					<input type="radio" name="' . self::$skirtType . '" value="'. \model\Skirt::$fullSkirt .'" '. $this->getSelectedTextForSkirtType(\model\Skirt::$fullSkirt) .' ><label for="full">Full Circle</label>
-					<input type="radio" name="' . self::$skirtType . '" value="'. \model\Skirt::$halfSkirt .'" '. $this->getSelectedTextForSkirtType(\model\Skirt::$halfSkirt) .' ><label for="half">Half Circle</label>
+					<div id="radio" class="formgroup">
+                        <input type="radio" name="' . self::$skirtType . '" value="'. \model\Skirt::$fullSkirt .'" '. $this->getSelectedTextForSkirtType(\model\Skirt::$fullSkirt) .' >
+                        <label for="full">'. $this->getTypeText(\model\Skirt::$fullSkirt).'</label>
+                        <input type="radio" name="' . self::$skirtType . '" value="'. \model\Skirt::$halfSkirt .'" '. $this->getSelectedTextForSkirtType(\model\Skirt::$halfSkirt) .' >
+                        <label for="half">'. $this->getTypeText(\model\Skirt::$halfSkirt).'</label>
 					</div>
-					<input type="submit" name="' . self::$calculate . '" value="Calculate" id="submitbutton"/>
+                    <div class="formgroup">
+                        <input type="submit" name="' . self::$calculate . '" value="Calculate" id="submitbutton"/>
+                    </div>
 				</fieldset>
 			</form>
+			'. $this->getSavedSkirtsHTML() .'
 		';
     }
 
     public function getSkirt(){
        return new \model\Skirt($this->getSkirtType(), $this->getMeasurement(), $this->getLength());
+    }
+
+    private function getSavedSkirtsHTML(){
+        //place latest calculation first in array
+        $skirts = array_reverse($this->skirtDAL->getSkirts());
+        if(count($skirts)){
+            $return = '<table id=sidebar>
+                        <tr>
+                        <th>Type</th>
+                        <th>Circumference</th>
+                        <th>Length</th>
+                        <th></th>
+                        </tr>';
+            foreach($skirts as $skirt){
+                /* @var $skirt \model\Skirt */
+                $return .= '<tr>
+                            <td>'.$this->getTypeText($skirt->getType()).'</td>
+                            <td>'.$skirt->getCircumference().'</td>
+                            <td>'.$skirt->getLength().'</td>
+                            <td><a href="index.php?CalculatorView%3A%3AMeasurement='.$skirt->getCircumference().'&CalculatorView%3A%3ALength='.$skirt->getLength().'&CalculatorView%3A%3ASkirtType='.$skirt->getType().'&CalculatorView%3A%3ACalculate=Calculate">
+                            Display Previous Skirt</a></td>
+                           ';
+            }
+            $return .= '</table>';
+            return $return;
+        }
+        return '';
+    }
+
+    private function getTypeText($value){
+        if($value == \model\Skirt::$fullSkirt){
+            return 'Full Circle';
+        }
+        if($value == \model\Skirt::$halfSkirt){
+            return 'Half Circle';
+        }
+        return '';
     }
 
 
