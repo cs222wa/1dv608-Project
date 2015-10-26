@@ -17,8 +17,7 @@ class Controller
     //if no calculation could be performed, doCalculate returns false.
     public function doCalculate(){
         //control if user have pressed the calculate button
-        if($this->calcView->userWantsToCalculate())
-       {
+        if($this->calcView->userWantsToCalculate()){
            //if user wants to make a calculation, proceed with getting form input.
            $waistCircumference = $this->calcView->getInputMeasurement();
            $skirtLength = $this->calcView->getInputSkirtLength();
@@ -35,9 +34,7 @@ class Controller
            }
            return true;
        }
-        else{
-            //if user haven't pressed the button, return false.
-            return false;
-        }
+        //if user haven't pressed the button, return false.
+        return false;
     }
 }

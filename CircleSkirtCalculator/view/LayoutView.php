@@ -24,11 +24,7 @@ class LayoutView {
             <div id="calculationform">
                 ' . $calcView->response() . '
             </div>
-            <div id="patterndisplay">
-
-            '. $this->renderCalculation($calculate, $skirtView) .'
-
-            </div>
+                '. $this->renderCalculation($calculate, $skirtView) .'
           </div>
          </body>
       </html>

@@ -11,10 +11,16 @@ class SkirtView
     }
 
     public function render(){
-        $this->renderFoldingInstructions();
-        $this->renderPattern();
-        $this->renderMeasurements($this->skirtModel->radius, $this->skirtModel->length);
-        $this->renderMinFabric();
+        return '
+        <div id="patterndisplay">
+        '. $this->renderHeader().'
+        '. $this->renderPattern().'
+            <div id="instructions">
+            '. $this->renderFoldingInstructions() . '
+            '.$this->renderMeasurements($this->skirtModel->radius, $this->skirtModel->length). '
+            '.$this->renderMinFabric(). '
+            </div>
+        </div>';
     }
 
     private function renderFoldingInstructions(){
@@ -29,47 +35,59 @@ class SkirtView
         }
     }
 
+    private function renderHeader(){
+        if($this->skirtModel->skirtType == 1){
+            return '<h2 class="patternheader">Full Circle Skirt</h2>';
+        }
+        elseif($this->skirtModel->skirtType == 2){
+            return '<h2 class="patternheader">Half Circle Skirt</h2>';
+        }
+        else{
+            return false;
+        }
+    }
+
     private function renderFullCircleInstructions()
     {
         //render folding instructions for Full Circle skirt
-        return '<p> Fold fabric once along the width and once along the length.</p>';
+        return '<h3>Folding Instructions</h3><p class="patterntext">Fold fabric once along the width and once along the length.</p>';
 
     }
 
     private function renderHalfCircleInstructions()
     {
         //render folding instructions for Half Circle skirt
-        return '<p> Fold fabric once along the width.</p>';
+        return '<h3>Folding Instructions</h3><p class="patterntext">Fold fabric once along the width.</p>';
 
     }
 
     private function renderPattern()
     {
         //render image for pattern
-        return '<img src="...\css\pattern.jpg" class="patternimg"/>';
+        return '<img src="../css/pattern.jpg" class="patternimg" alt="Skirt pattern"/>';
 
     }
 
     private function renderMeasurements($radius, $length)
     {
         //render calculated measurements saved as variables in Skirt/ returned and sent as parameters by Controller?
-        return '<p> A: '. $radius .'</p><p> B: '. $length .'</p> ';
+        return '<h3>Measurements</h3><p class="patterntext"> A: '. round($radius, 1, PHP_ROUND_HALF_UP) .' cm </p><p class="patterntext"> B: '. round($length, 1, PHP_ROUND_HALF_UP) .' cm </p> ';
 
     }
     private function renderMargin($marginWidth, $marginLength)
     {
         //render calculated measurements saved as variables in Skirt/ returned and sent as parameters by Controller?
-        return '<p> Margin width: '. $marginWidth .'</p><p> Margin length: '. $marginLength .'</p> ';
+        return '<p class="patterntext"> Margin width: '. round($marginWidth, 1, PHP_ROUND_HALF_UP) .' cm </p><p class="patterntext"> Margin length: '. round($marginLength, 1, PHP_ROUND_HALF_UP) .' cm </p> ';
 
 
     }
 
     private function renderMinFabric(){
         if($this->skirtModel->skirtType == 1){
-            return '<p> Minimum fabric width required: '. $this->skirtModel->minFabric*2 .'</p><p> Minimum fabric length required: '. $this->skirtModel->minFabric*2 .'</p>';
+            return '<h3>Minimum Fabric requirements</h3><p class="patterntext"> Width required: '. round($this->skirtModel->minFabric, 1, PHP_ROUND_HALF_UP) .' cm</p><p class="patterntext"> Length required: '. round($this->skirtModel->minFabric, 1, PHP_ROUND_HALF_UP) .' cm</p>';
         }
         elseif($this->skirtModel->skirtType == 2){
-            return '<p> Minimum fabric width required: '. $this->skirtModel->minFabric .'</p><p> Minimum fabric length required: '. $this->skirtModel->minFabric*2 .'</p>';
+            return '<h3>Minimum Fabric requirements</h3><p class="patterntext"> Width required: '. round($this->skirtModel->minFabric/2, 1, PHP_ROUND_HALF_UP) .' cm</p><p class="patterntext"> Length required: '. round($this->skirtModel->minFabric, 1, PHP_ROUND_HALF_UP) .' cm</p>';
         }
         else{
             return false;

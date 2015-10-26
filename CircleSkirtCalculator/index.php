@@ -22,7 +22,6 @@ $layoutView = new \view\LayoutView();
 $calcView = new \view\CalculatorView();
 $skirtView = new \view\SkirtView($skirtModel);
 
-
 //CREATE OBJECT OF THE CONTROLLER - SEND OBJECTS OF THE CORRESPONDING VIEWS AND MODELS AS PARAMETERS
 $controller = new \controller\Controller($calcView, $skirtView, $skirtModel);
 

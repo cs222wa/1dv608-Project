@@ -20,6 +20,7 @@ class CalculatorView
     public $fabricLengthNotValid = false;
     public $fabricWidthTooShort = false;
     public $fabricWidthNotValid = false;
+    public $noSkirtSelected = false;
 
     public function response() {
         $message = $this->message;
@@ -62,7 +63,6 @@ class CalculatorView
     //if method returns null - no style have been selected and an error message will be shown
     public function getSkirtStyleChoice(){
         $skirtType = $_REQUEST['skirtType'];
-
         if($skirtType == 1){
             return true;
         }
@@ -70,6 +70,20 @@ class CalculatorView
             return false;
         }
         return null;
+    }
+
+
+    //TODO: make application remmeber skirt type from previous calculation.
+    private function rememberSkirtType(){
+        //control which radio button was selected on Post
+        if ($_REQUEST['skirtType'] == 1) {
+            $this->fullSkirtStatus = 'checked';
+        }
+        else if ($_REQUEST['skirtType'] == 2) {
+            $this->halfSkirtStatus = 'checked';
+        }
+        //return the skirt type which was selected
+        return ($_REQUEST['skirtType']);
     }
 
     //sets message
@@ -98,6 +112,9 @@ class CalculatorView
         }
         if($this->fabricWidthTooShort){
             $this->message .= 'Fabric width must be a number higher than 0.';
+        }
+        if($this->noSkirtSelected){
+            $this->message .= 'You must select a skirt type.';
         }
         if("" == $this->message){
             return true;
@@ -176,12 +193,12 @@ class CalculatorView
                     //return measurement to controller
                     return $measurement;
                 }
-                $this->$measurementTooShort = true;
+                $this->measurementTooShort = true;
                 return false;
             }
-            $this->$measurementNotValid = true;
+            $this->measurementNotValid = true;
         }
-        $this->$measurementTooShort = true;
+        $this->measurementTooShort = true;
         return false;
     }
 
@@ -196,12 +213,12 @@ class CalculatorView
                     //return skirt length to controller
                     return $length;
                 }
-                $this->$lengthTooShort = true;
+                $this->lengthTooShort = true;
                 return false;
             }
-            $this->$lengthNotValid = true;
+            $this->lengthNotValid = true;
         }
-        $this->$lengthTooShort = true;
+        $this->lengthTooShort = true;
         return false;
     }
 
@@ -216,12 +233,12 @@ class CalculatorView
                     //return fabric length to controller
                     return $length;
                 }
-                $this->$fabricLengthTooShort = true;
+                $this->fabricLengthTooShort = true;
                 return false;
             }
-            $this->$fabricLengthNotValid = true;
+            $this->fabricLengthNotValid = true;
         }
-        $this->$fabricLengthTooShort = true;
+        $this->fabricLengthTooShort = true;
         return false;
     }
 
@@ -236,12 +253,12 @@ class CalculatorView
                     //return fabric width to controller
                     return $width;
                 }
-                $this->$fabricWidthTooShort = true;
+                $this->fabricWidthTooShort = true;
                 return false;
             }
-            $this->$fabricWidthNotValid = true;
+            $this->fabricWidthNotValid = true;
         }
-        $this->$fabricWidthTooShort = true;
+        $this->fabricWidthTooShort = true;
         return false;
     }
 
