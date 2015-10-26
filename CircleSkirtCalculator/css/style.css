@@ -60,3 +60,11 @@ label, input{
     margin-top: 20px;
     float: right;
 }
+
+#patterndisplay{
+    background-color: orange;
+    width: 70%;
+    height: 570px;
+    margin-right: 60px;
+    float: right;
+}

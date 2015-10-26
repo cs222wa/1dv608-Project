@@ -7,10 +7,10 @@ class Controller
     private $skirt;
 
 
-    public function __Controller($calcView, $skirtView, $skirtModel){
-        $this->calcView = $calcView;
-        $this->skirtView = $skirtView;
-        $this->skirt = $skirtModel;
+    public function __construct( \view\CalculatorView $calculatorV, \view\SkirtView $skirtV, \model\Skirt $skirtM){
+        $this->calcView = $calculatorV;
+        $this->skirtView = $skirtV;
+        $this->skirt = $skirtM;
     }
 
     //Initiates calculations process.
@@ -22,19 +22,22 @@ class Controller
            //if user wants to make a calculation, proceed with getting form input.
            $waistCircumference = $this->calcView->getInputMeasurement();
            $skirtLength = $this->calcView->getInputSkirtLength();
+           //fetch skirt type choice
+           $skirtType = $this->calcView->getSkirtStyleChoice();
+           if($skirtType){
+            //full skirt selected
+               $this->skirt->CalculateRadiusFullSkirt($waistCircumference, $skirtLength);
+           }
+           else{
+               //half skirt selected
+               $this->skirt->CalculateRadiusHalfSkirt($waistCircumference, $skirtLength);
 
-           //hämta ut val av kjolstyp
-
-           //if fabric width & length != 0 - räkna ut om tyget räcker
-           //om det ej angets, räkna endast ut kjolmönstrets mått
-
-
-
+           }
            return true;
        }
-
-        //if user haven't pressed the button, return false.
-        return false;
+        else{
+            //if user haven't pressed the button, return false.
+            return false;
+        }
     }
-
 }

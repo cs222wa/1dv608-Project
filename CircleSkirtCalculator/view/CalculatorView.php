@@ -9,6 +9,8 @@ class CalculatorView
     private static $calculate = 'CalculatorView::Calculate';
     private static $fabricLength = 'CalculatorView::FabricLength';
     private static $fabricWidth = 'CalculatorView::FabricWidth';
+    private $fullSkirtStatus = "checked";
+    private $halfSkirtStatus = "unchecked";
     private $message = "";
     public $measurementNotValid = false;
     public $measurementTooShort= false;
@@ -40,20 +42,34 @@ class CalculatorView
 					<label for="' . self::$length . '" class="aligned">Skirt length:</label>
 					<input type="text" size="20" id="' . self::$length . '" name="' . self::$length . '" value="' . $this->getLength() . '" />
 					</div>
+					<!---
 					<div id="fabriclabels">
 					<label for="' . self::$fabricLength . '" class="aligned">Fabric Length:</label>
 					<input type="text" size="20" id="' . self::$fabricLength . '" name="' . self::$fabricLength . '" value="' . $this->getFabricLength() . '" required=false />
 					<label for="' . self::$fabricWidth . '" class="aligned">Fabric Width:</label>
 					<input type="text" size="20" id="' . self::$fabricWidth . '" name="' . self::$fabricWidth . '" value="' . $this->getFabricWidth() . '"  required=false />
-					</div>
+					</div>-->
 					<div id="radio">
-					<input type="radio" name="full" value="full" checked><label for="full">Full Circle</label>
-					 <input type="radio" name="half" value="half"><label for="half">Half Circle</label>
+					<input type="radio" name="skirtType" value="1" '. $this->fullSkirtStatus .' ><label for="full">Full Circle</label>
+					<input type="radio" name="skirtType" value="2" '. $this->halfSkirtStatus .' ><label for="half">Half Circle</label>
 					</div>
 					<input type="submit" name="' . self::$calculate . '" value="Calculate" id="submitbutton"/>
 				</fieldset>
 			</form>
 		';
+    }
+    //returns the selected skirt type to controller. true = full circle, false = half circle
+    //if method returns null - no style have been selected and an error message will be shown
+    public function getSkirtStyleChoice(){
+        $skirtType = $_REQUEST['skirtType'];
+
+        if($skirtType == 1){
+            return true;
+        }
+        if($skirtType == 2 ){
+            return false;
+        }
+        return null;
     }
 
     //sets message
@@ -229,18 +245,4 @@ class CalculatorView
         return false;
     }
 
-    //returns the selected skirt type to controller. true = full circle, false = half circle
-    //if method returns null - no style have been selected and an error message will be shown
-    public function getSkirtStyleChoice(){
-        $fullStyle = $_REQUEST['full'];
-        $halfStyle = $_REQUEST['half'];
-
-        if ($fullStyle == "full") {
-            return true;
-        }
-        if ($halfStyle == "half") {
-            return false;
-        }
-        return null;
-    }
 }
