@@ -21,8 +21,11 @@ class Controller
         //control if user have pressed the calculate button
         if($this->calcView->userWantsToCalculate()){
             $skirt = $this->calcView->getSkirt();
-            $this->skirtDAL->saveSkirt($skirt);
-            return true;
+            if(!$skirt == null){
+                $this->skirtDAL->saveSkirt($skirt);
+                return true;
+            }
+            return false;
        }
         //if user haven't pressed the button, return false.
         return false;

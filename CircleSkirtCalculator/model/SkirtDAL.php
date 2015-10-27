@@ -6,7 +6,7 @@ class SkirtDAL
     private static $skirtSession = 'skirt';
 
     public function __construct(){
-        if(!isset($_SESSION[self::$skirtSession]) &&!is_array($_SESSION[self::$skirtSession])){
+        if(!isset($_SESSION[self::$skirtSession]) && !is_array($_SESSION[self::$skirtSession])){
             $_SESSION[self::$skirtSession] = array();
         }
     }

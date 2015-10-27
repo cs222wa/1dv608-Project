@@ -1,6 +1,12 @@
 <?php
 //Skirt class
 namespace model;
+class NoTypeException extends \Exception {};
+class NoCircumferenceException extends \Exception {};
+class NoLengthException extends \Exception {};
+class CircumferenceInvalidException extends \Exception {};
+class LengthInvalidException extends \Exception {};
+
 class Skirt
 {
     public static $fullSkirt = "fullskirt";
@@ -12,6 +18,18 @@ class Skirt
     private $minFabric;
 
     public function __construct($type, $circumference, $length){
+         if (!$type == self::$fullSkirt || !$type == self::$halfSkirt)
+            throw new NoTypeException();
+        if (is_numeric($circumference) == false || strlen($circumference) == 0)
+            throw new NoCircumferenceException();
+        if (is_numeric($length) == false || strlen($length) == 0)
+            throw new NoLengthException();
+        if (preg_match('/[^A-Za-z0-9.#\\-$]/', $circumference))
+            throw new CircumferenceInvalidException();
+        if (preg_match('/[^A-Za-z0-9.#\\-$]/', $length)){
+            throw new LengthInvalidException();
+        }
+
         $this->skirtType = $type;
         $this->circumference = $circumference;
         $this->length = $length;
