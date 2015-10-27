@@ -20,8 +20,10 @@ class Controller
     public function doCalculate(){
         //control if user have pressed the calculate button
         if($this->calcView->userWantsToCalculate()){
+            //get the skirt object from the view
             $skirt = $this->calcView->getSkirt();
             if(!$skirt == null){
+                //save the skirt
                 $this->skirtDAL->saveSkirt($skirt);
                 return true;
             }

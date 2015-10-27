@@ -2,11 +2,13 @@
 namespace view;
 class LayoutView {
 
+    //calls function to render HTML layout
     public function setLayout($controller, $calcView, $skirtview){
         $this->render($controller, $calcView, $skirtview);
     }
 
-    public function render($calculate, $calcView, $skirtView) {
+    //renders basic HTML layout with calculations form and skirt pattern.
+    private function render($calculate, $calcView, $skirtView) {
         echo '<!DOCTYPE html>
       <html>
         <head>
@@ -17,7 +19,6 @@ class LayoutView {
         <body>
         <header id="header"><h1 class="hidden">Circle Skirt Calculator</h1></header>
           <h3>Enter your waist measurement and desired skirt length in the form below and pick a skirt model</h3>
-         <!-- <p class="notice">Add fabric measurements to calculate if there is enough fabric to make the skirt.</p>-->
           <div class="container">
             <div id="calculationform">
                 ' . $calcView->response() . '
@@ -29,6 +30,7 @@ class LayoutView {
     ';
     }
 
+    //calls skirt view to render finished pattern and calculation information.
     private function renderCalculation($calculate, $skirtView){
         if($calculate){
             return $skirtView->render();

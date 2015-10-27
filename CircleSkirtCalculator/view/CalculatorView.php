@@ -16,6 +16,7 @@ class CalculatorView
         $this->skirtDAL = $skirtDAL;
     }
 
+    //sends set error message to the calculation form
     public function response() {
         $message = $this->message;
         //render HTML view and message
@@ -23,14 +24,16 @@ class CalculatorView
         return $response;
     }
 
-    //Display calculation form
+    //Display calculation form and list of saved skirts
     private function renderCalculationForm($message)
     {
         return '
 			<form action="?calculate" method="get" enctype="multipart/form-data">
 				<fieldset>
 					<legend>Circle Skirt Pattern Calculator</legend>
-					<p id="' . self::$messageId . '">' . $message . '</p>
+					<div id="msgholder">
+					    <p class="errormessage" id="' . self::$messageId . '">' . $message . '</p>
+					</div>
 					<div id="skirtlabels">
                         <div class="formgroup">
                             <label for="' . self::$measurement . '" class="aligned">Waist circumference:</label>
@@ -56,6 +59,7 @@ class CalculatorView
 		';
     }
 
+    //returns skirt object to controller in order to be saved.
     public function getSkirt(){
         try {
             return new \model\Skirt($this->getSkirtType(), $this->getMeasurement(), $this->getLength());
@@ -73,6 +77,7 @@ class CalculatorView
         return null;
     }
 
+    //HTML for the list containing saved skirt calculations
     private function getSavedSkirtsHTML(){
         //place latest calculation first in array
         $skirts = array_reverse($this->skirtDAL->getSkirts());
@@ -100,6 +105,24 @@ class CalculatorView
         return '';
     }
 
+    //checks if user has clicked calculate button
+    public function userWantsToCalculate(){
+        if (isset($_REQUEST[self::$calculate])){
+            return true;
+        }
+        //If calculate button is not clicked return false.
+        return false;
+    }
+
+    //gets label text for Radio buttons in the calculation form
+    private function getSelectedTextForSkirtType($value){
+        if($value == $this->getSkirtType()){
+            return 'checked="checked"';
+        }
+        return '';
+    }
+
+    //sets label text for radio buttons in calculations form
     private function getTypeText($value){
         if($value == \model\Skirt::$fullSkirt){
             return 'Full Circle';
@@ -124,7 +147,7 @@ class CalculatorView
         return null;
     }
 
-    //function used to display latest value of the measurement field
+    //function used to display latest value of the measurement field in form & return it to the skirt object
     private function getMeasurement()
     {
         //control if the user have entered anything in the waist measurement field
@@ -136,6 +159,7 @@ class CalculatorView
         return "";
     }
 
+    //function used to display the latest used skirt type in form & return it to the skirt object
     private function getSkirtType(){
          //control if the user have entered anything in the waist measurement field
         if (isset($_REQUEST[self::$skirtType])) {
@@ -146,23 +170,7 @@ class CalculatorView
         return \model\Skirt::$fullSkirt;
     }
 
-    private function getSelectedTextForSkirtType($value){
-        if($value == $this->getSkirtType()){
-            return 'checked="checked"';
-        }
-        return '';
-    }
-
-    //checks if user has clicked calculate button
-    public function userWantsToCalculate(){
-        if (isset($_REQUEST[self::$calculate])){
-            return true;
-        }
-        //If calculate button is not clicked return false.
-        return false;
-    }
-
-    //function used to display latest value of the skirt length field
+    //function used to display latest value of the skirt length field in form & return it to the skirt object
     private function getLength()
     {
         //control if the user have entered anything in the skirt length field
@@ -172,23 +180,5 @@ class CalculatorView
         }
         //if skirt length field in the form is empty on submition - display empty form.
         return "";
-    }
-
-    public function getInputMeasurement(){
-        //if a waist measurement has been posted
-        if(isset($_REQUEST[self::$measurement])) {
-            $measurement = $_REQUEST[self::$measurement];
-            //check for invalid characters - return true if not found, false if found
-            return $measurement;
-        }
-    }
-
-    public function getInputSkirtLength(){
-        //if a skirt length has been posted
-        if(isset($_REQUEST[self::$length])) {
-            $length = $_REQUEST[self::$length];
-            //check for invalid characters - return true if not found, false if found
-            return $length;
-        }
     }
 }
