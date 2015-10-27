@@ -18,7 +18,7 @@ class Skirt
     private $minFabric;
 
     public function __construct($type, $circumference, $length){
-         if (!$type == self::$fullSkirt || !$type == self::$halfSkirt)
+        if (!$type == self::$fullSkirt || !$type == self::$halfSkirt)
             throw new NoTypeException();
         if (is_numeric($circumference) == false || strlen($circumference) == 0)
             throw new NoCircumferenceException();
@@ -37,20 +37,6 @@ class Skirt
         $this->minFabric = 0;
     }
 
-    public function calculateRadius(){
-        switch($this->skirtType){
-            case self::$fullSkirt:
-                $this->CalculateRadiusFullSkirt();
-                break;
-            case self::$halfSkirt:
-                $this->CalculateRadiusHalfSkirt();
-                break;
-            default :
-                throw new \Exception("This skirt doesn't exist");
-        }
-        return $this->radius;
-    }
-
     public function getCircumference(){
         return $this->circumference;
     }
@@ -67,8 +53,24 @@ class Skirt
         return $this->minFabric;
     }
 
+    //compare a saved skirt object with a new one to see if they are identical
     public function isSame(\model\Skirt $toCompare){
         return ($toCompare->getLength() == $this->getLength() && $toCompare->getCircumference() == $this->getCircumference() && $toCompare->getType() == $this->getType());
+    }
+
+    //select which type of skirt shall be calculated and return the result
+    public function calculateRadius(){
+        switch($this->skirtType){
+            case self::$fullSkirt:
+                $this->CalculateRadiusFullSkirt();
+                break;
+            case self::$halfSkirt:
+                $this->CalculateRadiusHalfSkirt();
+                break;
+            default :
+                throw new NoTypeException();;
+        }
+        return $this->radius;
     }
 
     //Calculates and returns the radius of a full circle skirt

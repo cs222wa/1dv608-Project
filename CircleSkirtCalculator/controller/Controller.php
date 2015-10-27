@@ -28,7 +28,7 @@ class Controller
                 return true;
             }
             return false;
-       }
+        }
         //if user haven't pressed the button, return false.
         return false;
     }

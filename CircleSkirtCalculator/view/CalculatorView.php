@@ -3,7 +3,6 @@ namespace view;
 
 class CalculatorView
 {
-
     private static $measurement = 'CalculatorView::Measurement';
     private static $length = 'CalculatorView::Length';
     private static $messageId = 'CalculatorView::Message';
@@ -133,20 +132,6 @@ class CalculatorView
         return '';
     }
 
-    //returns the selected skirt type to controller.
-    public function getSkirtStyleChoice(){
-        if(isset($_REQUEST[self::$skirtType])){
-            $skirtType = $_REQUEST[self::$skirtType];
-            if($skirtType == \model\Skirt::$fullSkirt){
-                return true;
-            }
-            if($skirtType == \model\Skirt::$halfSkirt ){
-                return false;
-            }
-        }
-        return null;
-    }
-
     //function used to display latest value of the measurement field in form & return it to the skirt object
     private function getMeasurement()
     {
@@ -161,7 +146,7 @@ class CalculatorView
 
     //function used to display the latest used skirt type in form & return it to the skirt object
     private function getSkirtType(){
-         //control if the user have entered anything in the waist measurement field
+        //control if the user have entered anything in the waist measurement field
         if (isset($_REQUEST[self::$skirtType])) {
             //return choice of skirt
             return $_REQUEST[self::$skirtType];

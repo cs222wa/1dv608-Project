@@ -68,7 +68,7 @@ class SkirtView
 
     private function renderMeasurementsHTML(\model\Skirt $skirt)
     {
-      //render calculated measurements saved as variables in Skirt/ returned and sent as parameters by Controller?
+        //render calculated measurements saved as variables in Skirt/ returned and sent as parameters by Controller?
         return
             '<h3>Measurements</h3>
             <p class="patterntext"> A: '. round( $skirt->calculateRadius(), 1, PHP_ROUND_HALF_UP) .' cm </p>
@@ -95,16 +95,4 @@ class SkirtView
             return false;
         }
     }
-
-    /*
-   private function renderMargin($marginWidth, $marginLength)
-   {
-       //render calculated measurements saved as variables in Skirt/ returned and sent as parameters by Controller?
-       return
-           '<p class="patterntext"> Margin width: '. round($marginWidth, 1, PHP_ROUND_HALF_UP) .' cm </p>
-           <p class="patterntext"> Margin length: '. round($marginLength, 1, PHP_ROUND_HALF_UP) .' cm </p>
-           ';
-   }
-   */
-
 }
