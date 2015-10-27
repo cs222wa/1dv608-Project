@@ -44,10 +44,10 @@ class CalculatorView
                         </div>
 					</div>
 					<div id="radio" class="formgroup">
-                        <input type="radio" name="' . self::$skirtType . '" value="'. \model\Skirt::$fullSkirt .'" '. $this->getSelectedTextForSkirtType(\model\Skirt::$fullSkirt) .' >
-                        <label for="full">'. $this->getTypeText(\model\Skirt::$fullSkirt).'</label>
-                        <input type="radio" name="' . self::$skirtType . '" value="'. \model\Skirt::$halfSkirt .'" '. $this->getSelectedTextForSkirtType(\model\Skirt::$halfSkirt) .' >
-                        <label for="half">'. $this->getTypeText(\model\Skirt::$halfSkirt).'</label>
+                        <input type="radio" id="'. \model\Skirt::$fullSkirt .'" name="' . self::$skirtType . '" value="'. \model\Skirt::$fullSkirt .'" '. $this->getSelectedTextForSkirtType(\model\Skirt::$fullSkirt) .' >
+                        <label for="'. \model\Skirt::$fullSkirt .'">'. $this->getTypeText(\model\Skirt::$fullSkirt).'</label>
+                        <input type="radio" id="'. \model\Skirt::$halfSkirt .'" name="' . self::$skirtType . '" value="'. \model\Skirt::$halfSkirt .'" '. $this->getSelectedTextForSkirtType(\model\Skirt::$halfSkirt) .' >
+                        <label for="'. \model\Skirt::$halfSkirt .'">'. $this->getTypeText(\model\Skirt::$halfSkirt).'</label>
 					</div>
                     <div class="formgroup">
                         <input type="submit" name="' . self::$calculate . '" value="Calculate" id="submitbutton"/>
